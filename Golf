@@ -1,0 +1,5 @@
+class Hole:
+  def __init__(self, hole_number, par, stroke_index):
+      self.hole_number = hole_number
+      self.par = par
+      self.stroke_index = stroke_index
