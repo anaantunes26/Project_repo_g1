@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.write ("class Hole:
+st ("class Hole:
   def __init__(self, hole_number, par, stroke_index):
       self.hole_number = hole_number
       self.par = par
