@@ -1,4 +1,6 @@
-class Hole:
+import streamlit as st
+
+st.write ("class Hole:
   def __init__(self, hole_number, par, stroke_index):
       self.hole_number = hole_number
       self.par = par
@@ -48,4 +50,4 @@ def get_course_choice():
   print("2. Golfclub Appenzell")
   print("3. Golfpark Waldkirch")
   print("4. Create a new course")
-  choice = input("Enter your choice (1-4): ")
+  choice = input("Enter your choice (1-4): ")")
