@@ -50,3 +50,38 @@ def main():
 if __name__ == "__main__":
     main()
 
+class Hole:
+    def __init__(self, hole_number, par, stroke_index):
+        self.hole_number = hole_number
+        self.par = par
+        self.stroke_index = stroke_index 
+
+    def calculate_net_strokes(self, handicap, strokes):
+        stroke_deduction = 1 if self.stroke_index <= handicap else 0
+
+        if handicap > 18 and self.stroke_index <= (handicap - 18):
+            stroke_deduction += 1
+
+        net_strokes = strokes - stroke_deduction
+        return net_strokes
+
+def main():
+    st.title("Net Strokes Calculator")
+
+    hole_number = st.number_input("Enter hole number:", min_value=1, step=1)
+    par = st.number_input("Enter par for the hole:", min_value=3, step=1)
+    stroke_index = st.number_input("Enter stroke index for the hole:", min_value=1, step=1)
+    handicap = st.number_input("Enter player's handicap:", min_value=0, step=1)
+
+    hole = Hole(hole_number, par, stroke_index)
+
+    strokes = st.number_input("Enter strokes for the hole:", min_value=1, step=1)
+
+    net_strokes = hole.calculate_net_strokes(handicap, strokes)
+
+    st.write(f"Net strokes for Hole {hole_number}: {net_strokes}")
+
+if __name__ == "__main__":
+    main()
+
+
