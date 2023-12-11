@@ -43,18 +43,18 @@ class GolfRound:
         # ...
 
 def create_golf_round(course):
-    name = st.text_input("Enter player's name:")
-    handicap = st.number_input("Enter your handicap:", min_value=0, step=1)
+    name = st.text_input("Enter player's name:", key="player_name")
+    handicap = st.number_input("Enter your handicap:", min_value=0, step=1, key="player_handicap")
     player = Player(name, handicap)
     return GolfRound(course, player)
 
 def create_custom_course():
-    course_name = st.text_input("Enter the name of the course:")
+    course_name = st.text_input("Enter the name of the course:", key="course_name")
     holes = []
     for i in range(1, 19):
         st.write(f"Enter details for Hole {i}:")
-        par = st.number_input(f"Par for Hole {i}:", min_value=3, step=1)
-        stroke_index = st.number_input(f"Stroke Index for Hole {i}:", min_value=1, step=1)
+        par = st.number_input(f"Par for Hole {i}:", min_value=3, step=1, key=f"hole_{i}_par")
+        stroke_index = st.number_input(f"Stroke Index for Hole {i}:", min_value=1, step=1, key=f"hole_{i}_stroke")
         holes.append(Hole(i, par, stroke_index))
     return Course(course_name, holes)
 
@@ -87,10 +87,10 @@ def main():
         for hole in course.holes:
             st.write(hole)
 
-            strokes = st.number_input(f"Enter strokes for Hole {hole.hole_number}:", min_value=1, max_value=10)
+            strokes = st.number_input(f"Enter strokes for Hole {hole.hole_number}:", min_value=1, max_value=10, key=f"hole_{hole.hole_number}_strokes")
             golf_round.play_hole(hole, strokes)
 
-        another_player = st.radio("Is there another player?", ('Yes', 'No'))
+        another_player = st.radio("Is there another player?", ('Yes', 'No'), key="another_player_radio")
         if another_player == 'No':
             break
 
