@@ -15,7 +15,7 @@ class Player:
         self.handicap = handicap
         self.scores = {}
 
-    def play_hole(self, hole, strokes):
+    def play_hole(self, hole, strokes):p
         self.scores[hole.hole_number] = strokes
 
     def calculate_total_score(self):
