@@ -195,14 +195,14 @@ if __name__ == "__main__":
     admin = GolfCourseAdmin()
     admin.admin_actions()
 
-    def user_actions(golf_club):
-        while True:
-            st.subheader("User Menu:")
-            st.write("1. Let's play!")
-            st.write("2. Show previous games")
-            st.write("3. Compete with your puttpals")
-            st.write("4. Logout")
-            user_choice = st.text_input("Enter your choice (1-4): ")
+def user_actions(golf_club):
+    while True:
+        st.subheader("User Menu:")
+        st.write("1. Let's play!")
+        st.write("2. Show previous games")
+        st.write("3. Compete with your puttpals")
+        st.write("4. Logout")
+        user_choice = st.text_input("Enter your choice (1-4): ")
 
         if user_choice == '1':
             if not golf_club.current_user or not golf_club.current_user.player:
@@ -227,7 +227,7 @@ if __name__ == "__main__":
                 else:
                     st.write(f"No user found with the username '{friend_username}'.")
         elif user_choice == '4':
-                break
+            break
         else:
             st.write("Invalid choice. Please enter a valid option.")
 
