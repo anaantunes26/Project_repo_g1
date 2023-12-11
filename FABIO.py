@@ -43,8 +43,22 @@ elif menu_choice == "Exit":
     st.write("Goodbye!")
     st.stop()
 
+            # In der golf_app.py-Datei
 
-elif user_choice == "Logout":
-            golf_app.current_user = None
-            st.success("Logged out.")
-            st.sidebar.warning("User logged out.")
+class Player:
+    def __init__(self, name, handicap):
+        self.name = name
+        self.handicap = handicap
+        # Weitere Attribute und Methoden für Spielerdaten
+
+class Course:
+    def __init__(self, name, holes):
+        self.name = name
+        self.holes = holes
+        # Weitere Attribute und Methoden für Kursdaten
+
+class Round:
+    def __init__(self, course, player):
+        self.course = course
+        self.player = player
+        # Weitere Attribute und Methoden für Rundendaten
