@@ -1,28 +1,5 @@
 import streamlit as st
 
-# FABIO.py
-
-from Golf_App import GolfApp  # Importing the GolfApp class from Golf_App.py
-
-# Create an instance of GolfApp
-golf_app = GolfApp()
-
-# Load data or perform actions from Golf_App.py
-if st.button("Load Data"):
-    golf_app.load_accounts()
-    golf_app.load_courses()
-
-# Display the loaded data in Streamlit
-st.write("Geladene Muster-Accounts:")
-for account in golf_app.accounts:
-    st.write(f"**Benutzername:** {account['Benutzername']}, **E-Mail:** {account['E-Mail']}, **Mitgliedschaft:** {account['Mitgliedschaft']}")
-
-st.write("Golfplätze in der Schweiz:")
-for course in golf_app.courses:
-    st.write(f"**Name:** {course['Name']}, **Ort:** {course['Ort']}")
-    st.write(f"**Beschreibung:** {course['Beschreibung']}")
-    st.markdown("---")
-
 st.title("Welcome to the Golf App!")
 
 menu_choice = st.sidebar.radio("Menu", ["Home", "Register", "Login", "Exit"])
