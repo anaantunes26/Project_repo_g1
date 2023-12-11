@@ -44,7 +44,7 @@ elif menu_choice == "Exit":
     st.stop()
 
 
-        elif user_choice == "Logout":
+elif user_choice == "Logout":
             golf_app.current_user = None
             st.success("Logged out.")
             st.sidebar.warning("User logged out.")
