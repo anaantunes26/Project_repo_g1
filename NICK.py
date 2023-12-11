@@ -13,7 +13,7 @@ def main():
 
     # Input for player's name and handicap
     player_name = st.text_input("Enter player's name:")
-    player_handicap = st.number_input("Enter player's handicap:", min_value=0, step=0.1)
+    player_handicap = st.number_input("Enter player's handicap:", min_value=0, step=1)
 
     # Create a Player object using the input values
     player = Player(player_name, player_handicap)
