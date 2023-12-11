@@ -258,13 +258,10 @@ def main():
         if another_player == 'No':
             break
 
-    rounds.sort(key=lambda x: x.calculate_total_points(), reverse=True)
+rounds.sort(key=lambda x: x.calculate_total_points(), reverse=True)
 
-    st.write(f"\nResults at {course.name}:")
-    for round in rounds:
-        st.write(round)
-
-if __name__ == "__main__":
-    main()
+st.write(f"\nResults at {course.name}:")
+for golf_round in rounds:
+    st.write(golf_round)
 
 
