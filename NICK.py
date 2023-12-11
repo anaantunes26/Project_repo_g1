@@ -101,5 +101,44 @@ def main():
 if __name__ == "__main__":
     main()
 
+class GolfCalculator:
+    def calculate_stableford_points(self, par, net_strokes):
+        """Calculate Stableford points."""
+        return max(0, 2 + (par - net_strokes))
+
+    def calculate_points(self, handicap, strokes, par):
+        # get the net strokes
+        net_strokes = self.calculate_net_strokes(handicap, strokes)
+
+        # calculate and display Stableford points
+        points = self.calculate_stableford_points(par, net_strokes)
+
+        return points
+
+    def calculate_net_strokes(self, handicap, strokes):
+        # Implement logic to calculate net strokes based on handicap and strokes
+        # For example:
+        net_strokes = strokes - handicap
+        return net_strokes
+
+def main():
+    st.title('Stableford Points Calculator')
+
+    # Create an instance of the GolfCalculator class
+    golf_calc = GolfCalculator()
+
+    # Input fields
+    handicap = st.number_input('Handicap:', min_value=0, max_value=50, value=0)
+    strokes = st.number_input('Strokes:', min_value=0, max_value=200, value=0)
+    par = st.number_input('Par:', min_value=3, max_value=10, value=4)
+
+    # Calculate points
+    if st.button('Calculate'):
+        points = golf_calc.calculate_points(handicap, strokes, par)
+        st.success(f'Stableford Points: {points}')
+
+if __name__ == "__main__":
+    main()
+
 
 
