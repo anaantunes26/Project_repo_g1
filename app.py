@@ -4,5 +4,6 @@ st.write("Horray, we connected everything")
 st.write("Thank you for being here")
 st.button ("Roll the dice!")
 st.header("Results")
+st.selectbox("ALisa")
     
     
