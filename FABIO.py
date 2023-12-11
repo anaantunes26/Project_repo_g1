@@ -78,7 +78,7 @@ st.write("###Muster-Accounts:")
 for account in golf_app.accounts:
     st.header(f"**Benutzername:** {account['Benutzername']}, **E-Mail:** {account['E-Mail']}, **Mitgliedschaft:** {account['Mitgliedschaft']}")
 
-st.write("###Golfplätze in der Schweiz:")
+st.header("###Golfplätze in der Schweiz:")
 for course in golf_app.courses:
     st.header(f"**Name:** {course['Name']}, **Ort:** {course['Ort']}")
     st.write(f"**Beschreibung:** {course['Beschreibung']}")
