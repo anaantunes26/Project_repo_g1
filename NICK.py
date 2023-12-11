@@ -6,9 +6,7 @@ class Player:
         self.handicap = handicap
 
     def __str__(self):
-        return f"{self.name} - Handicap: {self.handicap}, Total Strokes: {self.calculate_total_strokes()}"
-
-    # Other methods for Player class...
+        return f"{self.name} - Handicap: {self.handicap}"
 
 class Hole:
     def __init__(self, hole_number, par, stroke_index):
@@ -16,14 +14,10 @@ class Hole:
         self.par = par
         self.stroke_index = stroke_index
 
-    # Other methods for Hole class...
-
 class Course:
     def __init__(self, name, holes):
         self.name = name
         self.holes = holes
-
-    # Other methods for Course class...
 
 class GolfRound:
     def __init__(self, course, player):
@@ -32,7 +26,21 @@ class GolfRound:
         self.strokes_by_hole = {}
         self.points_by_hole = {}
 
-    # Other methods for GolfRound class...
+    def play_hole(self, hole, strokes):
+        hole_number = hole.hole_number
+
+        if 1 <= strokes <= 10:
+            self.strokes_by_hole[hole_number] = strokes
+            self.calculate_points_by_hole(hole, strokes)
+        else:
+            st.warning("Please enter a stroke value between 1 and 10.")
+
+    def calculate_points_by_hole(self, hole, strokes):
+        hole_number = hole.hole_number
+        handicap = self.player.handicap
+
+        # Calculate points logic here
+        # ...
 
 def create_golf_round(course):
     name = st.text_input("Enter player's name:")
@@ -89,8 +97,9 @@ def main():
     rounds.sort(key=lambda x: x.calculate_total_points(), reverse=True)
 
     st.write(f"\nResults at {course.name}:")
-    for round in rounds:
-        st.write(round)
+    for rnd in rounds:
+        st.write(rnd.player)  # Display player info
+        # Display other round information as needed
 
 if __name__ == "__main__":
     main()
