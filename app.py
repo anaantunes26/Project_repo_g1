@@ -196,7 +196,7 @@ if __name__ == "__main__":
     admin.admin_actions()
 
     def user_actions(golf_club):
-    while True:
+        while True:
         st.subheader("User Menu:")
         st.write("1. Let's play!")
         st.write("2. Show previous games")
