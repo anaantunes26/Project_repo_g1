@@ -241,9 +241,9 @@ if __name__ == '__main__':
 
     class GolfClub:
         def __init__(self, name, location, description):
-        self.name = name
-        self.location = location
-        self.description = description
+            self.name = name
+            self.location = location
+            self.description = description
 
 # Erstellen von Instanzen für drei Golfclubs in der Schweiz
 golfclub_1 = GolfClub(
