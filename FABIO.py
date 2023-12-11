@@ -74,12 +74,12 @@ golf_app.load_accounts()
 golf_app.load_courses()
 
 # Anzeige der geladenen Daten in Streamlit
-st.write("### Geladene Muster-Accounts:")
+st.write("###Muster-Accounts:")
 for account in golf_app.accounts:
-    st.write(f"**Benutzername:** {account['Benutzername']}, **E-Mail:** {account['E-Mail']}, **Mitgliedschaft:** {account['Mitgliedschaft']}")
+    st.header(f"**Benutzername:** {account['Benutzername']}, **E-Mail:** {account['E-Mail']}, **Mitgliedschaft:** {account['Mitgliedschaft']}")
 
-st.write("### Geladene Golfplätze in der Schweiz:")
+st.write("###Golfplätze in der Schweiz:")
 for course in golf_app.courses:
-    st.write(f"**Name:** {course['Name']}, **Ort:** {course['Ort']}")
+    st.header(f"**Name:** {course['Name']}, **Ort:** {course['Ort']}")
     st.write(f"**Beschreibung:** {course['Beschreibung']}")
     st.write("---")
