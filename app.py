@@ -74,7 +74,6 @@ class Account:
         self.is_admin = is_admin
         self.player = Player(f"{first_name} {last_name}", handicap)
 
-
 class GolfApp:
     def __init__(self):
         self.accounts = []
@@ -145,8 +144,6 @@ class GolfApp:
                 self.current_user = account
                 return True
         return False
-
-import streamlit as st
 
 class GolfCourse:
     def __init__(self, name):
