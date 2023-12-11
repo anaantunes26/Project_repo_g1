@@ -227,7 +227,7 @@ if __name__ == "__main__":
                 else:
                     st.write(f"No user found with the username '{friend_username}'.")
         elif user_choice == '4':
-            break
+                break
         else:
             st.write("Invalid choice. Please enter a valid option.")
 
