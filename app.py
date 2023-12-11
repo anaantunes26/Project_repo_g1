@@ -315,8 +315,7 @@ show_golfclub_info(golfclub_1)
 show_golfclub_info(golfclub_2)
 show_golfclub_info(golfclub_3)
 
-    description="Ein eleganter Golfclub mit Blick auf den Genfer See, bekannt für seinen anspruchsvollen 18-Loch-Kurs."
-)
+description="Ein eleganter Golfclub mit Blick auf den Genfer See, bekannt für seinen anspruchsvollen 18-Loch-Kurs."
 
 # Streamlit-Anwendung zur Anzeige der Golfclub-Informationen
 st.title("Schweizer Golfclubs")
