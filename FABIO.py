@@ -43,7 +43,9 @@ elif menu_choice == "Exit":
     st.write("Goodbye!")
     st.stop()
 
-if golf_app.current_user:
+from golf_app import current_user  # Stelle sicher, dass der Import korrekt ist
+
+if hasattr(golf_app, 'current_user') and golf_app.current_user:
     st.sidebar.subheader(f"Logged in as: {golf_app.current_user.username}")
 
     if golf_app.current_user.is_admin:
