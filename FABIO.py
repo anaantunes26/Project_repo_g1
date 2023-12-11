@@ -13,7 +13,7 @@ if st.button("Load Data"):
     golf_app.load_courses()
 
 # Display the loaded data in Streamlit
-st.write()"Geladene Muster-Accounts:")
+st.write("Geladene Muster-Accounts:")
 for account in golf_app.accounts:
     st.write(f"**Benutzername:** {account['Benutzername']}, **E-Mail:** {account['E-Mail']}, **Mitgliedschaft:** {account['Mitgliedschaft']}")
 
