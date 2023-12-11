@@ -232,18 +232,14 @@ def user_actions(golf_club):
             st.write("Invalid choice. Please enter a valid option.")
 
 # Create an instance of your GolfClub class
-golf_club = GolfClub()
+import streamlit as st
 
-# Run Streamlit
-if __name__ == '__main__':
-    st.title("Golf Club App")
-    user_actions(golf_club)
-
-    class GolfClub:
-        def __init__(self, name, location, description):
-            self.name = name
-            self.location = location
-            self.description = description
+# Definition der Klasse GolfClub
+class GolfClub:
+    def __init__(self, name, location, description):
+        self.name = name
+        self.location = location
+        self.description = description
 
 # Erstellen von Instanzen für drei Golfclubs in der Schweiz
 golfclub_1 = GolfClub(
@@ -273,49 +269,6 @@ print("Beschreibung:", golfclub_2.description)
 print("-----")
 print("Golfclub 3:", golfclub_3.name, "in", golfclub_3.location)
 print("Beschreibung:", golfclub_3.description)
-
-class GolfClub:
-    def __init__(self, name, location, description):
-        self.name = name
-        self.location = location
-        self.description = description
-
-# Erstellen von Instanzen für drei Golfclubs in der Schweiz
-golfclub_1 = GolfClub(
-    name="Golfclub Davos",
-    location="Davos, Graubünden",
-    description="Ein renommierter Golfclub in den Schweizer Alpen mit einem 18-Loch-Meisterschaftsplatz."
-)
-
-golfclub_2 = GolfClub(
-    name="Golfclub Bad Ragaz",
-    location="Bad Ragaz, St. Gallen",
-    description="Ein exklusiver Golfclub mit einem 36-Loch-Platz, der sich in der Nähe der Alpen befindet."
-)
-
-golfclub_3 = GolfClub(
-    name="Golfclub Genève",
-    location="Genf",
-    description="Ein eleganter Golfclub mit Blick auf den Genfer See, bekannt für seinen anspruchsvollen 18-Loch-Kurs."
-)
-
-# Streamlit-Anwendung zur Anzeige der Golfclub-Informationen
-st.title("Schweizer Golfclubs")
-
-# Funktion, um Golfclub-Informationen anzuzeigen
-def show_golfclub_info(golfclub):
-    st.subheader(golfclub.name)
-    st.write("Ort:", golfclub.location)
-    st.write("Beschreibung:", golfclub.description)
-    st.write("----")
-
-# Anzeige der Informationen zu den erstellten Golfclubs
-st.header("Informationen zu den Golfclubs:")
-show_golfclub_info(golfclub_1)
-show_golfclub_info(golfclub_2)
-show_golfclub_info(golfclub_3)
-
-description="Ein eleganter Golfclub mit Blick auf den Genfer See, bekannt für seinen anspruchsvollen 18-Loch-Kurs."
 
 # Streamlit-Anwendung zur Anzeige der Golfclub-Informationen
 st.title("Schweizer Golfclubs")
