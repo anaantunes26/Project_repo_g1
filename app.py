@@ -146,6 +146,8 @@ class GolfApp:
                 return True
         return False
 
+import streamlit as st
+
 class GolfCourse:
     def __init__(self, name):
         self.name = name
@@ -153,42 +155,44 @@ class GolfCourse:
 class GolfCourseAdmin:
     def __init__(self):
         self.courses = []
+        self.admin_choice = None  # Variable to store admin choice
 
     def create_custom_course(self):
         name = st.text_input("Enter the name of the new golf course:")
         return GolfCourse(name)
 
     def admin_actions(self):
-        while True:
-            st.title("Admin Menu")
-            admin_choice = st.selectbox("Select an action:", ("Add Golf Course", "Delete Golf Course", "Logout"))
+        st.title("Admin Menu")
+        self.admin_choice = st.selectbox("Select an action:",
+                                         ("Select an action", "Add Golf Course", "Delete Golf Course", "Logout"))
 
-            if admin_choice == "Add Golf Course":
-                st.subheader("Add Golf Course")
-                course = self.create_custom_course()
-                self.courses.append(course)
-                st.success(f"Golf Course '{course.name}' added.")
+        if self.admin_choice == "Add Golf Course":
+            st.subheader("Add Golf Course")
+            course = self.create_custom_course()
+            self.courses.append(course)
+            st.success(f"Golf Course '{course.name}' added.")
 
-            elif admin_choice == "Delete Golf Course":
-                st.subheader("Delete Golf Course")
-                if len(self.courses) == 0:
-                    st.warning("No golf courses available to delete.")
-                else:
-                    st.write("Available Golf Courses:")
-                    selected_course = st.selectbox("Select a course to delete:",
-                                                  [course.name for course in self.courses])
-                    course_to_delete = next((course for course in self.courses if course.name == selected_course), None)
-                    if course_to_delete:
-                        self.courses.remove(course_to_delete)
-                        st.success(f"Golf Course '{course_to_delete.name}' deleted.")
-                    else:
-                        st.error("Course not found.")
-
-            elif admin_choice == "Logout":
-                break
-
+        elif self.admin_choice == "Delete Golf Course":
+            st.subheader("Delete Golf Course")
+            if len(self.courses) == 0:
+                st.warning("No golf courses available to delete.")
             else:
-                st.warning("Invalid choice. Please select a valid option.")
+                st.write("Available Golf Courses:")
+                selected_course = st.selectbox("Select a course to delete:",
+                                              [course.name for course in self.courses],
+                                              key="delete_course")  # Unique key for this selectbox
+                course_to_delete = next((course for course in self.courses if course.name == selected_course), None)
+                if course_to_delete:
+                    self.courses.remove(course_to_delete)
+                    st.success(f"Golf Course '{course_to_delete.name}' deleted.")
+                else:
+                    st.error("Course not found.")
+
+        elif self.admin_choice == "Logout":
+            pass  # Logout action placeholder
+
+        else:
+            st.warning("Invalid choice. Please select a valid option.")
 
 if __name__ == "__main__":
     admin = GolfCourseAdmin()
