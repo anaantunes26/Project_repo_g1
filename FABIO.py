@@ -60,9 +60,9 @@ class GolfApp:
     def load_courses(self):
         # Golfplätze in der Schweiz
         self.courses = [
-            {"Name": "Swiss Alps Golf Club", "Ort": "Crans-Montana", "Beschreibung": "Ein atemberaubender Golfplatz in den Schweizer Alpen mit Panoramablicken und anspruchsvollen Löchern."},
-            {"Name": "Lake Geneva Golf Resort", "Ort": "Genf", "Beschreibung": "Ein exklusiver Golfplatz am Genfer See mit Blick auf das Wasser und eine perfekte Kombination aus Herausforderung und Schönheit."},
-            {"Name": "Zurich Valley Golf Club", "Ort": "Zürich", "Beschreibung": "Ein moderner Golfplatz in der Nähe von Zürich, der eine erstklassige Spielumgebung mit hochwertigen Einrichtungen bietet."}
+            {"Swiss Alps Golf Club", "Crans-Montana", "Beschreibung": "Ein atemberaubender Golfplatz in den Schweizer Alpen mit Panoramablicken und anspruchsvollen Löchern."},
+            {"Lake Geneva Golf Resort", "Genf", "Beschreibung": "Ein exklusiver Golfplatz am Genfer See mit Blick auf das Wasser und eine perfekte Kombination aus Herausforderung und Schönheit."},
+            {"Zurich Valley Golf Club", "Zürich", "Beschreibung": "Ein moderner Golfplatz in der Nähe von Zürich, der eine erstklassige Spielumgebung mit hochwertigen Einrichtungen bietet."}
         ]
         st.write("Golfplätze wurden geladen!")
 
