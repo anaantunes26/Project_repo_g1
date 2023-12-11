@@ -1,6 +1,11 @@
 import streamlit as st
 
+# Create an instance of GolfApp
+golf_app = Golf_App.py()
 
+# Load existing accounts and courses
+golf_app.load_accounts()
+golf_app.load_courses()
 
 st.title("Welcome to the Golf App!")
 
