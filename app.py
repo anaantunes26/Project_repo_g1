@@ -194,3 +194,47 @@ class GolfCourseAdmin:
 if __name__ == "__main__":
     admin = GolfCourseAdmin()
     admin.admin_actions()
+
+    def user_actions(golf_club):
+    while True:
+        st.subheader("User Menu:")
+        st.write("1. Let's play!")
+        st.write("2. Show previous games")
+        st.write("3. Compete with your puttpals")
+        st.write("4. Logout")
+        user_choice = st.text_input("Enter your choice (1-4): ")
+
+        if user_choice == '1':
+            if not golf_club.current_user or not golf_club.current_user.player:
+                st.write("Please login first.")
+            else:
+                golf_club.play_golf()
+        elif user_choice == '2':
+            if not golf_club.current_user or not golf_club.current_user.player:
+                st.write("Please login first.")
+            else:
+                golf_club.current_user.player.show_previous_rounds()
+        elif user_choice == '3':
+            if not golf_club.current_user or not golf_club.current_user.player:
+                st.write("Please login first.")
+            else:
+                friend_username = st.text_input("Enter the username of your friend: ")
+                friend = next((account for account in golf_club.accounts if account.username == friend_username), None)
+                if friend and friend.is_admin:
+                    st.write("Cannot compete with an admin.")
+                elif friend:
+                    golf_club.current_user.player.compete_with_friend(friend.player)
+                else:
+                    st.write(f"No user found with the username '{friend_username}'.")
+        elif user_choice == '4':
+            break
+        else:
+            st.write("Invalid choice. Please enter a valid option.")
+
+# Create an instance of your GolfClub class
+golf_club = GolfClub()
+
+# Run Streamlit
+if __name__ == '__main__':
+    st.title("Golf Club App")
+    user_actions(golf_club)
