@@ -258,7 +258,12 @@ def main():
         if another_player == 'No':
             break
 
-rounds.sort(key=lambda x: x.calculate_total_points(), reverse=True)
+class GolfRound:
+    # ... (andere Methoden)
+
+    def calculate_total_points(self):
+        total_points = sum(self.points_by_hole.values())
+        return total_points
 
 st.write(f"\nResults at {course.name}:")
 for golf_round in rounds:
