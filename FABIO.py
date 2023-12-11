@@ -1,5 +1,12 @@
 import streamlit as st
 
+# Create an instance of GolfApp
+golf_app = GolfApp()
+
+# Load existing accounts and courses
+golf_app.load_accounts()
+golf_app.load_courses()
+
 st.title("Welcome to the Golf App!")
 
 menu_choice = st.sidebar.radio("Menu", ["Home", "Register", "Login", "Exit"])
