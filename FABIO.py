@@ -1,3 +1,4 @@
+from Golf_App import GolfApp
 import streamlit as st
 
 st.title("Welcome to the Golf App!")
@@ -38,7 +39,7 @@ elif menu_choice == "Login":
 
 elif menu_choice == "Exit":
     # Save the courses before exiting
-    golf_app.save_courses()
+    GolfApp.save_courses()
     st.balloons()
     st.write("Goodbye!")
     st.stop()
