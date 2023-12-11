@@ -165,5 +165,38 @@ def main():
 if __name__ == "__main__":
     main()
 
+class Course:
+    def __init__(self, name, holes):
+        self.name = name
+        self.holes = holes
+
+class GolfRound:
+    def __init__(self, course, player):
+        self.course = course
+        self.player = player
+        self.strokes_by_hole = {}
+        self.points_by_hole = {}
+
+def main():
+    st.title('Golf Round Tracker')
+
+    # Create Course
+    course_name = st.text_input('Course Name:')
+    num_holes = st.number_input('Number of Holes:', min_value=1, max_value=18, value=18)
+    holes = [f'Hole {i+1}' for i in range(num_holes)]
+    course = Course(course_name, holes)
+
+    # Create Golf Round
+    player_name = st.text_input('Player Name:')
+    golf_round = GolfRound(course, player_name)
+
+    # Display Course and Player Info
+    st.write(f"Course: {golf_round.course.name}")
+    st.write(f"Player: {golf_round.player}")
+
+if __name__ == "__main__":
+    main()
+
+
 
 
