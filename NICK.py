@@ -140,5 +140,30 @@ def main():
 if __name__ == "__main__":
     main()
 
+class GolfHole:
+    def __init__(self, hole_number, par, stroke_index):
+        self.hole_number = hole_number
+        self.par = par
+        self.stroke_index = stroke_index
+
+    def __str__(self):
+        return f"Hole {self.hole_number} - Par: {self.par}, Stroke Index: {self.stroke_index}"
+
+def main():
+    st.title('Golf Hole Information')
+
+    hole_number = st.number_input('Hole Number:', min_value=1, max_value=18, value=1)
+    par = st.number_input('Par:', min_value=3, max_value=5, value=4)
+    stroke_index = st.number_input('Stroke Index:', min_value=1, max_value=18, value=1)
+
+    golf_hole = GolfHole(hole_number, par, stroke_index)
+
+    if st.button('Display Hole Info'):
+        info = str(golf_hole)
+        st.success(info)
+
+if __name__ == "__main__":
+    main()
+
 
 
