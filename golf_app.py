@@ -84,7 +84,11 @@ class GolfApp:
     def save_accounts(self, filename='accounts.txt'):
         with open(filename, 'w') as file:
             for account in self.accounts:
-                file.write(f"{account.first_name},{account.last_name},{account.handicap},{account.username},{account.password},{account.is_admin}\n")
+                #print(self.accounts)
+                try:
+                    file.write(f"{account.first_name},{account.last_name},{account.handicap},{account.username},{account.password},{account.is_admin}\n")
+                except:
+                    pass
 
     def load_accounts(self, filename='accounts.txt'):
         try:
@@ -125,18 +129,19 @@ class GolfApp:
         except FileNotFoundError:
             pass
 
-    def create_account(self, first_name, last_name, handicap, username, password, is_admin)
-        self.accounts.append(account)):
+    def create_account(self, first_name, last_name, handicap, username, password, is_admin):
+        #self.accounts.append(account)
         print("Registration:")
         
-        account_type = input("Register as user or admin? (user/admin): ").lower()
-        is_admin = account_type == 'admin'
+        #account_type = input("Register as user or admin? (user/admin): ").lower()
+        #is_admin = account_type == 'admin' 
+        #print(is_admin)
         account = Account(first_name, last_name, handicap, username, password, is_admin)
         self.accounts.append(account)
 
-    def login(self):
-        username = input("Enter your username: ")
-        password = input("Enter your password: ")
+    def login(self, username, password):
+        #username = input("Enter your username: ")
+        #password = input("Enter your password: ")
         for account in self.accounts:
             if account.username == username and account.password == password:
                 self.current_user = account
