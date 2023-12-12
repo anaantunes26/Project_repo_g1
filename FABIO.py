@@ -1,5 +1,4 @@
 import streamlit as st
-from golf_App import GolfApp
 
 st.title("Welcome to the Golf App!")
 
