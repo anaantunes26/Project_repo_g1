@@ -36,3 +36,21 @@ class GolfApp:
             if account['Username'] == username and account['Password'] == password:
                 return True  # Successful login
         return False  # Invalid credentials
+    
+def add_course(self, name, location, par, description):
+        new_course = {
+            "Name": name,
+            "Location": location,
+            "Par": par,
+            "Description": description
+        }
+        self.courses.append(new_course)
+
+# Instantiate GolfApp and add Swiss courses
+golf_app = GolfApp()
+golf_app.add_course("Alpine Peaks Golf Resort", "Interlaken, Switzerland", 72,
+                    "Nestled among the Swiss Alps, this course offers breathtaking views of snow-capped peaks.")
+golf_app.add_course("Lakeview Greens Golf Club", "Geneva, Switzerland", 70,
+                    "Overlooking Lake Geneva, this course provides stunning views of the lake and surrounding vineyards.")
+golf_app.add_course("Swiss Valley Golf Retreat", "Lucerne, Switzerland", 68,
+                    "Set in the scenic Swiss countryside, Swiss Valley offers a mix of open fairways and challenging doglegs.")
