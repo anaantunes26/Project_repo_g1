@@ -2,8 +2,6 @@
 import streamlit as st
 from golf_app import GolfApp
 
-write()
-
 # Create an instance of GolfApp
 golf_app = GolfApp()
 
