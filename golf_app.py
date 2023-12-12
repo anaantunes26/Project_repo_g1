@@ -125,17 +125,23 @@ class GolfApp:
         except FileNotFoundError:
             pass
 
-    def create_account(self):
-        print("Registration:")
-        first_name = input("Enter your first name: ")
-        last_name = input("Enter your last name: ")
-        handicap = int(input("Enter your handicap: "))
-        username = input("Enter your username: ")
-        password = input("Enter your password: ")
-        account_type = input("Register as user or admin? (user/admin): ").lower()
-        is_admin = account_type == 'admin'
+class GolfApp:
+    def __init__(self):
+        self.accounts = []
+
+    def create_account(self, first_name, last_name, handicap, username, password, is_admin):
+        # Check if username already exists
+        if self.is_username_taken(username):
+            return False  # Username already exists, return False to indicate failure
+        
         account = Account(first_name, last_name, handicap, username, password, is_admin)
         self.accounts.append(account)
+        return True  # Account creation successful
+    
+    def is_username_taken(self, username):
+        # Implement a method to check if the username already exists in the accounts
+        # Return True if the username is already taken, otherwise return False
+        return any(account.username == username for account in self.accounts)
 
     def login(self):
         username = input("Enter your username: ")

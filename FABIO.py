@@ -27,9 +27,15 @@ elif menu_choice == "Register":
     is_admin = account_type == "Admin"
 
 if st.button("Register"):
-    new_account = golf_app.create_account(first_name, last_name, handicap, username, password, is_admin)
-    if new_account:
-        golf_app.accounts.append(new_account)
+    first_name = st.text_input("Enter your first name:")
+    last_name = st.text_input("Enter your last name:")
+    handicap = st.number_input("Enter your handicap:", min_value=0, step=1)
+    username = st.text_input("Enter your username:")
+    password = st.text_input("Enter your password:", type="password")
+    account_type = st.radio("Register as user or admin?", ["User", "Admin"])
+    is_admin = account_type == "Admin"
+
+    if golf_app.create_account(first_name, last_name, handicap, username, password, is_admin):
         golf_app.save_accounts()
         st.success("Registration successful!")
     else:
