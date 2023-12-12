@@ -1,3 +1,13 @@
+from golf_app import GolfApp
+
+# Create an instance of GolfApp
+golf_app = GolfApp()
+
+# Load existing accounts and courses
+golf_app.load_accounts()
+golf_app.load_courses()
+
+
 from datetime import datetime
 
 class Hole:
