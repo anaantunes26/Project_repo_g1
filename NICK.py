@@ -22,6 +22,9 @@ def main():
     st.write("Player Information:")
     st.write(str(player))
 
+    if __name__ == "__main__":
+    main()
+
 class Hole:
     def __init__(self, hole_number, par, stroke_index):
         self.hole_number = hole_number

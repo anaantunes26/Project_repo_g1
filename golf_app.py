@@ -9,7 +9,6 @@ class Hole:
     def __str__(self):
         return f"Hole {self.hole_number} - Par: {self.par}, Stroke Index: {self.stroke_index}"
 
-
 class Player:
     def __init__(self, name, handicap):
         self.name = name
@@ -73,7 +72,6 @@ class Account:
         self.password = password
         self.is_admin = is_admin
         self.player = Player(f"{first_name} {last_name}", handicap)
-
 
 class GolfApp:
     def __init__(self):
