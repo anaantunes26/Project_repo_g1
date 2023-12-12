@@ -1,13 +1,3 @@
-from golf_app import GolfApp
-
-# Create an instance of GolfApp
-golf_app = GolfApp()
-
-# Load existing accounts and courses
-golf_app.load_accounts()
-golf_app.load_courses()
-
-
 from datetime import datetime
 
 class Hole:
@@ -18,6 +8,7 @@ class Hole:
 
     def __str__(self):
         return f"Hole {self.hole_number} - Par: {self.par}, Stroke Index: {self.stroke_index}"
+
 
 class Player:
     def __init__(self, name, handicap):
@@ -83,6 +74,7 @@ class Account:
         self.is_admin = is_admin
         self.player = Player(f"{first_name} {last_name}", handicap)
 
+
 class GolfApp:
     def __init__(self):
         self.accounts = []
@@ -133,23 +125,14 @@ class GolfApp:
         except FileNotFoundError:
             pass
 
-class GolfApp:
-    def __init__(self):
-        self.accounts = []
-
-    def create_account(self, first_name, last_name, handicap, username, password, is_admin):
-        # Check if username already exists
-        if self.is_username_taken(username):
-            return False  # Username already exists, return False to indicate failure
+    def create_account(self, first_name, last_name, handicap, username, password, is_admin)
+        self.accounts.append(account)):
+        print("Registration:")
         
+        account_type = input("Register as user or admin? (user/admin): ").lower()
+        is_admin = account_type == 'admin'
         account = Account(first_name, last_name, handicap, username, password, is_admin)
         self.accounts.append(account)
-        return True  # Account creation successful
-    
-    def is_username_taken(self, username):
-        # Implement a method to check if the username already exists in the accounts
-        # Return True if the username is already taken, otherwise return False
-        return any(account.username == username for account in self.accounts)
 
     def login(self):
         username = input("Enter your username: ")
