@@ -23,7 +23,7 @@ def main():
     st.write(str(player))
 
     if __name__ == "__main__":
-    main()
+        main()
 
 class Hole:
     def __init__(self, hole_number, par, stroke_index):
