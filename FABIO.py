@@ -26,9 +26,14 @@ elif menu_choice == "Register":
     account_type = st.radio("Register as user or admin?", ["User", "Admin"])
     is_admin = account_type == "Admin"
 
-    if st.button("Register"):
-        golf_app.accounts.append(golf_app.create_account(first_name, last_name, handicap, username, password, is_admin))
+if st.button("Register"):
+    new_account = golf_app.create_account(first_name, last_name, handicap, username, password, is_admin)
+    if new_account:
+        golf_app.accounts.append(new_account)
         golf_app.save_accounts()
+        st.success("Registration successful!")
+    else:
+        st.error("Username already exists. Please choose a different one.")
 
 elif menu_choice == "Login":
     st.subheader("Login:")
