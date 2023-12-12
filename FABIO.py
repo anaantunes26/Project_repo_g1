@@ -11,7 +11,7 @@ elif menu_choice == "Register":
     st.subheader("Registration:")
     first_name = st.text_input("Enter your first name:")
     last_name = st.text_input("Enter your last name:")
-    handicap = st.number_input("Enter your handicap:", min_value=0, step=1)
+    handicap = st.number_input("Enter your handicap:", min_value=0, max_value=50, step=1)
     username = st.text_input("Enter your username:")
     password = st.text_input("Enter your password:", type="password", key="register_password")
     account_type = st.radio("Register as user or admin?", ["User", "Admin"])
