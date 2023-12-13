@@ -70,8 +70,10 @@ if golf_app.current_user:
                 holes.append({"hole_number": i, "par": par, "stroke_index": stroke_index})
 
             if st.button("Add Golf Course"):
+                print("hello1")
                 golf_app.courses.append(golf_app.create_custom_course(course_name, holes))
-                golf_app.save_courses()
+                golf_app.save_courses() 
+                print("hello")
 
         elif admin_choice == "Delete Golf Course":
             st.subheader("Delete Golf Course:")

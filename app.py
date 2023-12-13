@@ -1,287 +1,142 @@
 import streamlit as st  
 
-class Hole:
-    def __init__(self, hole_number, par, stroke_index):
-        self.hole_number = hole_number
-        self.par = par
-        self.stroke_index = stroke_index
-
-    def __str__(self):
-        return f"Hole {self.hole_number} - Par: {self.par}, Stroke Index: {self.stroke_index}"
-
-
 class Player:
-    def __init__(self, name, handicap):
-        self.name = name
-        self.handicap = handicap
-        self.scores = {}  # Dictionary to store scores for each round
+  def __init__(self, name, handicap):
+      self.name = name
+      self.handicap = handicap
 
-    def play_round(self, course):
-        round_scores = {}
-        print(f"\nPlaying at {course.name}...")
-        for hole in course.holes:
-            print(hole)
-            strokes = int(input(f"Enter strokes for Hole {hole.hole_number}: "))
-            round_scores[hole.hole_number] = strokes
+  def __str__(self):
+      return f"{self.name} - Handicap: {self.handicap}, Total Strokes: {self.calculate_total_strokes()}"
 
-        round_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.scores[round_date] = {"course": course.name, "scores": round_scores}
-        print("\nRound completed!")
+class Hole:
+  def __init__(self, hole_number, par, stroke_index):
+      self.hole_number = hole_number
+      self.par = par
+      self.stroke_index = stroke_index
 
-    def show_previous_rounds(self):
-        if not self.scores:
-            print("No previous rounds.")
-            return
+  def calculate_net_strokes(self, handicap, strokes):
+    """Calculate net strokes based on the SI and the HCP."""
 
-        print("\nPrevious Rounds:")
-        print("{:<20} {:<20} {:<20}".format("Course", "Score", "Date"))
-        for date, data in self.scores.items():
-            total_score = sum(data["scores"].values())
-            print("{:<20} {:<20} {:<20}".format(data["course"], total_score, date))
+    # determine the strokes we are allowed to subtract
+    stroke_deduction = 1 if self.stroke_index <= handicap else 0
 
-    def compete_with_friend(self, friend):
-        print("\nComparing with your friend...")
-        user_scores = self.scores.values()
-        friend_scores = friend.scores.values()
+    # for handicaps greater than 18, check if we need to give an additional stroke
+    if handicap > 18 and self.stroke_index <= (handicap - 18):
+      stroke_deduction += 1
 
-        if not user_scores or not friend_scores:
-            print("No rounds to compare.")
-            return
+    # calculate the net strokes
+    net_strokes = strokes - stroke_deduction
+    return net_strokes
 
-        user_total = sum(sum(round["scores"].values()) for round in user_scores)
-        friend_total = sum(sum(round["scores"].values()) for round in friend_scores)
+  def calculate_stableford_points(self, net_strokes):
+    """Calculate Stableford points."""
+    return max(0, 2 + (self.par - net_strokes))
 
-        print(f"{self.name}'s total score: {user_total}")
-        print(f"{friend.name}'s total score: {friend_total}")
+  def calculate_points(self, handicap, strokes):
+    # get the net strokes
+    net_strokes = self.calculate_net_strokes(handicap, strokes)
 
-    def __str__(self):
-        return f"{self.name} - Handicap: {self.handicap}"
+    # calculate and display Stableford points
+    points = self.calculate_stableford_points(net_strokes)
 
+    return points
+
+  def __str__(self):
+      return f"Hole {self.hole_number} - Par: {self.par}, Stroke Index: {self.stroke_index}"
 
 class Course:
-    def __init__(self, name, holes):
-        self.name = name
-        self.holes = holes
+  def __init__(self, name, holes):
+      self.name = name
+      self.holes = holes
+
+class GolfRound:
+  def __init__(self, course, player):
+      self.course = course
+      self.player = player
+      self.strokes_by_hole = {}
+      self.points_by_hole = {}
+
+  def play_hole(self, hole, strokes):
+      # TODO: implement solid validations for strokes - 1 max. 10?
+      self.strokes_by_hole[hole.hole_number] = strokes
+      self.calculate_points_by_hole(hole, strokes)
+
+  def calculate_points_by_hole(self, hole, strokes):
+      self.points_by_hole[hole.hole_number] = hole.calculate_points(self.player.handicap, strokes)
+
+  def calculate_total_strokes(self):
+      return sum(self.strokes_by_hole.values())
+
+  def calculate_total_points(self):
+    return sum(self.points_by_hole.values())
+
+  def __str__(self):
+      return f"{self.player.name} - Handicap: {self.player.handicap}, Total Strokes: {self.calculate_total_strokes()}, Total Points: {self.calculate_total_points()}"
+
+def create_golf_round(course):
+  name = input("Enter player's name: ")
+  handicap = int(input("Enter your handicap: "))
+  player = Player(name, handicap)
+  return GolfRound(course, player)
+
+def create_custom_course():
+  course_name = input("Enter the name of the course: ")
+  holes = []
+  for i in range(1, 19):
+      print(f"Enter details for Hole {i}:")
+      par = int(input("Par: "))
+      stroke_index = int(input("Stroke Index: "))
+      holes.append(Hole(i, par, stroke_index))
+  return Course(course_name, holes)
+
+def get_course_choice():
+  print("Choose a golf course:")
+  print("1. Ostschweizerischer Golfclub Niederbüren")
+  print("2. Golfclub Appenzell")
+  print("3. Golfpark Waldkirch")
+  print("4. Create a new course")
+  choice = input("Enter your choice (1-4): ")
+
+  if choice == '1':
+      predefined_holes = [Hole(1, 5, 13), Hole(2, 4, 9), Hole(3, 4, 1), Hole(4, 5, 3), Hole(5, 3, 11), Hole(6, 4, 17), Hole(7, 4, 7), Hole(8, 3, 15), Hole(9, 4, 5), Hole(10, 3, 8), Hole(11, 4, 18), Hole(12, 4, 12), Hole(13, 4, 6), Hole(14, 4, 2), Hole(15, 5, 16), Hole(16, 3, 10), Hole(17, 4, 4), Hole(18, 5, 14)]
+      return Course("Ostschweizerischer Golfclub Niederbüren", predefined_holes)
+  elif choice == '2':
+      predefined_holes = [Hole(1, 3, 15), Hole(2, 4, 13), Hole(3, 5, 5), Hole(4, 4, 7), Hole(5, 4, 3), Hole(6, 5, 9), Hole(7, 3, 17), Hole(8, 5, 1), Hole(9, 4, 11), Hole(10, 3, 14), Hole(11, 4, 12), Hole(12, 3, 18), Hole(13, 5, 2), Hole(14, 4, 4), Hole(15, 4, 6), Hole(16, 4, 8), Hole(17, 4, 10), Hole(18, 3, 16)]
+      return Course("Golfclub Appenzell", predefined_holes)
+  elif choice == '3':
+      predefined_holes = [Hole(1, 4, 13), Hole(2, 4, 3), Hole(3, 3, 11), Hole(4, 5, 5), Hole(5, 3, 17), Hole(6, 4, 1), Hole(7, 4, 9), Hole(8, 4, 7), Hole(9, 5, 15), Hole(10, 5, 6), Hole(11, 3, 16), Hole(12, 4, 4), Hole(13, 4, 14), Hole(14, 3, 10), Hole(15, 4, 12), Hole(16, 4, 2), Hole(17, 3, 18), Hole(18, 5, 8)]
+      return Course("Golfpark Waldkirch", predefined_holes)
+  else:
+      return create_custom_course()
+
+def main():
+  course = get_course_choice()
+
+  rounds = []
+  while True:
+      golf_round = create_golf_round(course)
+      rounds.append(golf_round)
+
+      for hole in course.holes:
+          print(hole)
+
+          # Ask the player to enter the strokes for the hole and save the result
+          strokes = int(input(f"Enter strokes for Hole {hole.hole_number}: "))
+          golf_round.play_hole(hole, strokes)
+
+          # Now we can calculate the stableford score for the player for this hole
+          # player.calculate_stableford_score(hole)
 
 
-class Account:
-    def __init__(self, first_name, last_name, handicap, username, password, is_admin=False):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.handicap = handicap
-        self.username = username
-        self.password = password
-        self.is_admin = is_admin
-        self.player = Player(f"{first_name} {last_name}", handicap)
+      another_player = input("Is there another player? (yes/no): ").lower()
+      if another_player != 'yes':
+          break
 
-class GolfApp:
-    def __init__(self):
-        self.accounts = []
-        self.current_user = None
-        self.courses = []  # List to store available golf courses
+  rounds.sort(key=lambda x: x.calculate_total_points(), reverse=True)
 
-    def save_accounts(self, filename='accounts.txt'):
-        with open(filename, 'w') as file:
-            for account in self.accounts:
-                file.write(f"{account.first_name},{account.last_name},{account.handicap},{account.username},{account.password},{account.is_admin}\n")
-
-    def load_accounts(self, filename='accounts.txt'):
-        try:
-            with open(filename, 'r') as file:
-                for line in file:
-                    data = line.strip().split(',')
-                    first_name, last_name, handicap, username, password, is_admin = data
-                    handicap = int(handicap)
-                    is_admin = is_admin.lower() == 'true'
-                    account = Account(first_name, last_name, handicap, username, password, is_admin)
-                    self.accounts.append(account)
-        except FileNotFoundError:
-            pass
-
-    def save_courses(self, filename='courses.txt'):
-        with open(filename, 'w') as file:
-            for course in self.courses:
-                file.write(f"{course.name}\n")
-                for hole in course.holes:
-                    file.write(f"{hole.hole_number},{hole.par},{hole.stroke_index}\n")
-
-    def load_courses(self, filename='courses.txt'):
-        try:
-            with open(filename, 'r') as file:
-                line_iter = iter(file)
-                while True:
-                    try:
-                        course_name = next(line_iter).strip()
-                        holes = []
-                        for _ in range(18):
-                            hole_data = next(line_iter).strip().split(',')
-                            hole_number, par, stroke_index = map(int, hole_data)
-                            holes.append(Hole(hole_number, par, stroke_index))
-                        course = Course(course_name, holes)
-                        self.courses.append(course)
-                    except StopIteration:
-                        break
-        except FileNotFoundError:
-            pass
-
-    def create_account(self):
-        print("Registration:")
-        first_name = input("Enter your first name: ")
-        last_name = input("Enter your last name: ")
-        handicap = int(input("Enter your handicap: "))
-        username = input("Enter your username: ")
-        password = input("Enter your password: ")
-        account_type = input("Register as user or admin? (user/admin): ").lower()
-        is_admin = account_type == 'admin'
-        account = Account(first_name, last_name, handicap, username, password, is_admin)
-        self.accounts.append(account)
-
-    def login(self):
-        username = input("Enter your username: ")
-        password = input("Enter your password: ")
-        for account in self.accounts:
-            if account.username == username and account.password == password:
-                self.current_user = account
-                return True
-        return False
-
-class GolfCourse:
-    def __init__(self, name):
-        self.name = name
-
-class GolfCourseAdmin:
-    def __init__(self):
-        self.courses = []
-        self.admin_choice = None  # Variable to store admin choice
-
-    def create_custom_course(self):
-        name = st.text_input("Enter the name of the new golf course:")
-        return GolfCourse(name)
-
-    def admin_actions(self):
-        st.title("Admin Menu")
-        self.admin_choice = st.selectbox("Select an action:",
-                                         ("Select an action", "Add Golf Course", "Delete Golf Course", "Logout"))
-
-        if self.admin_choice == "Add Golf Course":
-            st.subheader("Add Golf Course")
-            course = self.create_custom_course()
-            self.courses.append(course)
-            st.success(f"Golf Course '{course.name}' added.")
-
-        elif self.admin_choice == "Delete Golf Course":
-            st.subheader("Delete Golf Course")
-            if len(self.courses) == 0:
-                st.warning("No golf courses available to delete.")
-            else:
-                st.write("Available Golf Courses:")
-                selected_course = st.selectbox("Select a course to delete:",
-                                              [course.name for course in self.courses],
-                                              key="delete_course")  # Unique key for this selectbox
-                course_to_delete = next((course for course in self.courses if course.name == selected_course), None)
-                if course_to_delete:
-                    self.courses.remove(course_to_delete)
-                    st.success(f"Golf Course '{course_to_delete.name}' deleted.")
-                else:
-                    st.error("Course not found.")
-
-        elif self.admin_choice == "Logout":
-            pass  # Logout action placeholder
-
-        else:
-            st.warning("Invalid choice. Please select a valid option.")
+  print(f"\nResults at {course.name}:")
+  for round in rounds:
+      print(round)
 
 if __name__ == "__main__":
-    admin = GolfCourseAdmin()
-    admin.admin_actions()
-
-def user_actions(golf_club):
-    while True:
-        st.subheader("User Menu:")
-        st.write("1. Let's play!")
-        st.write("2. Show previous games")
-        st.write("3. Compete with your puttpals")
-        st.write("4. Logout")
-        user_choice = st.text_input("Enter your choice (1-4): ")
-
-        if user_choice == '1':
-            if not golf_club.current_user or not golf_club.current_user.player:
-                st.write("Please login first.")
-            else:
-                golf_club.play_golf()
-        elif user_choice == '2':
-            if not golf_club.current_user or not golf_club.current_user.player:
-                st.write("Please login first.")
-            else:
-                golf_club.current_user.player.show_previous_rounds()
-        elif user_choice == '3':
-            if not golf_club.current_user or not golf_club.current_user.player:
-                st.write("Please login first.")
-            else:
-                friend_username = st.text_input("Enter the username of your friend: ")
-                friend = next((account for account in golf_club.accounts if account.username == friend_username), None)
-                if friend and friend.is_admin:
-                    st.write("Cannot compete with an admin.")
-                elif friend:
-                    golf_club.current_user.player.compete_with_friend(friend.player)
-                else:
-                    st.write(f"No user found with the username '{friend_username}'.")
-        elif user_choice == '4':
-            break
-        else:
-            st.write("Invalid choice. Please enter a valid option.")
-
-# Create an instance of your GolfClub class
-import streamlit as st
-
-# Definition der Klasse GolfClub
-class GolfClub:
-    def __init__(self, name, location, description):
-        self.name = name
-        self.location = location
-        self.description = description
-
-# Erstellen von Instanzen für drei Golfclubs in der Schweiz
-golfclub_1 = GolfClub(
-    name="Golfclub Davos",
-    location="Davos, Graubünden",
-    description="Ein renommierter Golfclub in den Schweizer Alpen mit einem 18-Loch-Meisterschaftsplatz."
-)
-
-golfclub_2 = GolfClub(
-    name="Golfclub Bad Ragaz",
-    location="Bad Ragaz, St. Gallen",
-    description="Ein exklusiver Golfclub mit einem 36-Loch-Platz, der sich in der Nähe der Alpen befindet."
-)
-
-golfclub_3 = GolfClub(
-    name="Golfclub Genève",
-    location="Genf",
-    description="Ein eleganter Golfclub mit Blick auf den Genfer See, bekannt für seinen anspruchsvollen 18-Loch-Kurs."
-)
-
-# Zugriff auf Informationen der Golfclubs
-print("Golfclub 1:", golfclub_1.name, "in", golfclub_1.location)
-print("Beschreibung:", golfclub_1.description)
-print("-----")
-print("Golfclub 2:", golfclub_2.name, "in", golfclub_2.location)
-print("Beschreibung:", golfclub_2.description)
-print("-----")
-print("Golfclub 3:", golfclub_3.name, "in", golfclub_3.location)
-print("Beschreibung:", golfclub_3.description)
-
-# Streamlit-Anwendung zur Anzeige der Golfclub-Informationen
-st.title("Schweizer Golfclubs")
-
-# Funktion, um Golfclub-Informationen anzuzeigen
-def show_golfclub_info(golfclub):
-    st.subheader(golfclub.name)
-    st.write("Ort:", golfclub.location)
-    st.write("Beschreibung:", golfclub.description)
-    st.write("----")
-
-# Anzeige der Informationen zu den erstellten Golfclubs
-st.header("Informationen zu den Golfclubs:")
-show_golfclub_info(golfclub_1)
-show_golfclub_info(golfclub_2)
-show_golfclub_info(golfclub_3)
+  main()
