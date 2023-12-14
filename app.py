@@ -16,7 +16,7 @@ class Hole:
 
   def calculate_net_strokes(self, handicap, strokes):
     """Calculate net strokes based on the SI and the HCP."""
-
+s
     # determine the strokes we are allowed to subtract
     stroke_deduction = 1 if self.stroke_index <= handicap else 0
 
