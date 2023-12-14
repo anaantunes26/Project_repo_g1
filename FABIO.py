@@ -18,8 +18,8 @@ if menu_choice == "Home":
     weather_json = requests.get("https://api.open-meteo.com/v1/forecast?latitude=47.14562540&longitude=9.35043320&current=temperature_2m,wind_speed_10m").json()
     st.image("./assets/bg_golf.jpg")
     st.write("Here's the weather forecast for your next round in St. Gallen:")
-    st.write("Temperature: {}".format(weather_json["current"]["temperature_2m"]))
-    st.write("Wind speed: {}".format(weather_json["current"]["wind_speed_10m"]))
+    st.write("Temperature: {} °C".format(weather_json["current"]["temperature_2m"]))
+    st.write("Wind speed: {} m/s".format(weather_json["current"]["wind_speed_10m"]))
     st.caption("(Data provided by Open Meteo API)")
 
 elif menu_choice == "Register":
